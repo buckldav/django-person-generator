@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.conf.global_settings import MEDIA_ROOT
+from django.conf.global_settings import MEDIA_URL
 import requests
 
 def generate_image(request):
@@ -7,7 +7,7 @@ def generate_image(request):
   url = 'https://thispersondoesnotexist.com/image'
   req = requests.get(url)
   # Adjust the names and paths below to fit your project
-  filename = '/persons/tmp.png'
+  filename = '/persons/tmp.jpg'
   file = open('media' + filename, 'wb+')
   # Write the file
   for chunk in req.iter_content(100000):
@@ -15,5 +15,5 @@ def generate_image(request):
   file.close()
 
   return JsonResponse(data={
-    "path": MEDIA_ROOT + filename
+    "path": MEDIA_URL + filename
   })

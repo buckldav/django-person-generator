@@ -1,0 +1,26 @@
+{% include "django/forms/widgets/clearable_file_input.html" %}
+
+{% if widget.value %}
+  {% comment %} This is for when you are changing a person {% endcomment %}
+  <img src="{{ widget.value.url }}" id="currentImage" width="100" alt="current image">
+{% else %}
+  {% comment %} This is for when you are adding a person {% endcomment %}
+  <div>
+    <h5>If no file above, this generated image will be used</h5>
+    <img id="generatedImage" width="100">
+    <button id="newImage">Get New Image</button>
+  </div>
+  <script>
+    function loadImage() {
+      // The date thingy at the end is prevent image caching
+      document.getElementById("generatedImage").setAttribute("src", "/media/persons/tmp.jpg?"+new Date().toISOString())
+    }
+    loadImage()
+    function getNewImage(e) {
+      e.preventDefault()
+      fetch('{% url "generate-image" %}')
+      loadImage()
+    }
+    document.getElementById("newImage").onclick = getNewImage
+  </script>
+{% endif %}

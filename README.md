@@ -15,3 +15,6 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py runserver
 ```
+
+## Tutorial
+Visit [https://dev.to/buckldav/django-person-image-generator-29c8](https://dev.to/buckldav/django-person-image-generator-29c8) for a walkthrough on how to build this.

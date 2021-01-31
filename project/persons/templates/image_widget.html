@@ -9,6 +9,7 @@
     <h5>If no file above, this generated image will be used</h5>
     <img id="generatedImage" width="100">
     <button id="newImage">Get New Image</button>
+    <span id="loading" style="display: none;">Loading...</span>
   </div>
   <script>
     function loadImage() {
@@ -16,10 +17,14 @@
       document.getElementById("generatedImage").setAttribute("src", "/media/persons/tmp.jpg?"+new Date().toISOString())
     }
     loadImage()
-    function getNewImage(e) {
+    async function getNewImage(e) {
+      const loading = document.getElementById("loading")
+      loading.style.display = "inline"
       e.preventDefault()
-      fetch('{% url "generate-image" %}')
-      loadImage()
+      await fetch('{% url "generate-image" %}').then(() => {
+        loadImage()
+        loading.style.display = "none"
+      })
     }
     document.getElementById("newImage").onclick = getNewImage
   </script>
